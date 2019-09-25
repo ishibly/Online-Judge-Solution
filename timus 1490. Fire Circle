@@ -1,0 +1,24 @@
+#include "bits/stdc++.h"
+
+using namespace std;
+using LL = long long;
+
+constexpr int N = 1e5 + 5;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    vector< LL> squares;
+    for (LL i = 0; i <= N; i ++) squares.push_back(i * i);
+
+    LL R;
+    cin >> R;
+
+    LL result = 0;
+    for (LL i = 0; i < R; i ++) {
+        int x = lower_bound(squares.begin(), squares.end(), R * R - i * i) - squares.begin();
+        result += x;
+    }
+    cout << result * 4 << "\n";
+}
