@@ -1,0 +1,38 @@
+#include "bits/stdc++.h"
+
+using namespace std;
+using LL = long long;
+
+constexpr int N = 1e5 + 5;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    vector< pair< pair< int, int>, int> > range(n);
+    for (int i = 0; i < n; i ++) {
+        cin >> range[i].first.first >> range[i].first.second;
+        range[i].second = i + 1;
+    }
+
+    sort(range.begin(), range.end());
+    int q;
+    cin >> q;
+
+    int k = 0;
+    priority_queue< pair< int, int>, vector< pair< int, int>>, greater< pair< int, int>>> pq;
+    while (q--) {
+        int x;
+        cin >> x;
+        while (k < n && range[k].first.first <= x) {
+            pq.emplace(range[k].first.second, range[k].second);
+            k ++;
+        }
+        while (!pq.empty() && pq.top().first < x) pq.pop();
+        if (pq.empty()) cout << -1 << "\n";
+        else cout << pq.top().second << "\n";
+    }
+}
