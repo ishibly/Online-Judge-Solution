@@ -1,0 +1,63 @@
+#include "bits/stdc++.h"
+
+using namespace std;
+using LL = long long;
+
+constexpr int N = 4005;
+
+vector< int> nxt[N];
+int go[N], cache[N];
+int n;
+
+int dp(int k) {
+    if (k == n) return 0;
+    int &rv = cache[k];
+    if (~rv) return rv;
+
+    rv = N;
+    for (const int &p : nxt[k]) {
+        if (1 + dp(p + 1) < rv) {
+            rv = 1 + dp(p + 1);
+            go[k] = p - k + 1;
+        }
+    }
+    return rv;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string s;
+    cin >> s;
+
+    n = s.size();
+
+    for (int i = 0; i < n; i ++) {
+        int l = i, r = i;
+        while (l >= 0 && r < n) {
+            if (s[l] == s[r]) nxt[l].push_back(r);
+            else break;
+            l --; r ++;
+        }
+    }
+
+    for (int i = 0; i + 1 < n; i ++) {
+        int l = i, r = i + 1;
+        while (l >= 0 && r < n) {
+            if (s[l] == s[r]) nxt[l].push_back(r);
+            else break;
+            l --; r ++;
+        }
+    }
+
+    memset(cache, -1, sizeof cache);
+    int result = dp(0);
+    cout << result << "\n";
+
+    for (int i = 0; i < n;  ) {
+        if (i) cout << " ";
+        cout << s.substr(i, go[i]);
+        i += go[i];
+    }
+}
