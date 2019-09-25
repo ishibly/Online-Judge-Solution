@@ -1,0 +1,44 @@
+#include "bits/stdc++.h"
+
+using namespace std;
+using LL = long long;
+
+constexpr int N = 1e5 + 5;
+
+set< string> st;
+
+bool occured_before(string x) {
+    if (isdigit(x.back())) x.pop_back();
+    for (char &c : x) {
+        c = tolower(c);
+    }
+    return st.find(x) != st.end();
+}
+
+void add(string x) {
+    if (isdigit(x.back())) x.pop_back();
+    for (char &c : x) {
+        c = tolower(c);
+    }
+    st.insert(x);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, q;
+    cin >> n >> n >> q;
+    cin >> ws;
+
+    for (int i = 0; i < n; i ++) {
+        string team;
+        getline(cin, team);
+
+        if (occured_before(team) == false) {
+            if (q == 0) return cout << team << "\n", 0;
+            q --;
+            add(team);
+        }
+    }
+}
