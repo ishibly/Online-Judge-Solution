@@ -1,0 +1,41 @@
+#include "bits/stdc++.h"
+
+using namespace std;
+using LL = long long;
+
+constexpr int N = 105;
+
+int in[N][N], station[N];
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i ++) for (int j = 1; j <= n; j++ ) cin >> in[i][j];
+
+    int mx = 0;
+    for (int i = 1; i <= n; i ++) {
+        for (int j = i + 1; j <= n; j ++) {
+            int x = in[i][j];
+            for (int k = i; k < j; k ++) {
+                station[k] += x;
+                mx = max(mx, station[k]);
+            }
+        }
+    }
+
+    memset(station, 0, sizeof station);
+    for (int i = 1; i <= n; i ++) {
+        for (int j = 1; j < i; j ++) {
+            int x = in[i][j];
+            for (int k = j + 1; k <= i; k ++) {
+                station[k] += x;
+                mx = max(mx, station[k]);
+            }
+        }
+    }
+
+    cout << (mx + 35) / 36 << "\n";
+}
