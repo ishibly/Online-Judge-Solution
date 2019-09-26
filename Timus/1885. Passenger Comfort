@@ -1,0 +1,43 @@
+#include "bits/stdc++.h"
+
+using namespace std;
+using LL = long long;
+
+constexpr int N = 1e5 + 5;
+constexpr double EPS = 1e-9;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    double h, t, v, x;
+    cin >> h >> t >> v >> x;
+
+    //finds minimum time goes with speed v, (v is max speed)
+    double min_time;
+    double l = 0, r = t;
+    while (fabs(l - r) > EPS) {
+        double t1 = (l + r) / 2;
+        double t2 = t - t1;
+        double d = h - v * t1;
+        double x1 = d / t2;
+        min_time = t1;
+        if (x1 > x) l = t1 + EPS;
+        else r = t1 - EPS;
+    }
+
+    cout << setprecision(10);
+    cout << min_time << ' ';
+
+    ///finds minimum speed > x, (minimum speed means maximum time)
+    double speed, max_time;
+    l = x, r = v;
+    while (fabs(l - r) > EPS) {
+        double mid = (l + r) / 2;
+        speed = mid;
+        if (speed * t > h) r = mid - EPS;
+        else l = mid + EPS;
+    }
+    max_time = h / speed;
+    cout << max_time << "\n";
+}
