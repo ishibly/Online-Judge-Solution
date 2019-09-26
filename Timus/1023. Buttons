@@ -1,0 +1,17 @@
+#include "bits/stdc++.h"
+using namespace std;
+
+int main() {
+    int k;
+    scanf("%d", &k);
+
+    int ans = k - 1;
+    for (int a = 2; a * a <= k; a++) {
+        if (k % a == 0) {
+            if (a - 1 > 1) ans = min(ans, a - 1);
+            int b = k / a;
+            if (b - 1 > 1) ans = min(ans, b - 1);
+        }
+    }
+    printf("%d\n", ans);
+}
